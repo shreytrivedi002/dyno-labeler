@@ -7,10 +7,10 @@ import { BottomNav } from "@/components/BottomNav";
 
 export function LayoutShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const isPublic = pathname?.startsWith("/product/") ?? false;
+  const isMinimal = pathname === "/" || (pathname?.startsWith("/product/") ?? false);
 
-  if (isPublic) {
-    return <>{children}</>;
+  if (isMinimal) {
+    return <main className="max-w-5xl mx-auto px-4 py-6">{children}</main>;
   }
 
   return (
