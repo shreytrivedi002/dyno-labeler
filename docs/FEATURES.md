@@ -1,4 +1,4 @@
-## Dyno Labeler – Feature Overview
+## Dyno Labels – Feature Overview
 
 A mobile‑first web app for jewellery shops to generate live price labels with QR codes and barcodes.
 
@@ -40,7 +40,7 @@ A mobile‑first web app for jewellery shops to generate live price labels with 
 
 ### Quality & UX Details
 - Clean, consistent UI components (buttons, inputs, cards).
-- Minimal home page with product name (Dyno Labeler) and CTAs (Login, Sign up).
+- Minimal home page with product name (Dyno Labels) and CTAs (Login, Sign up).
 - Sticky theme switcher in header (desktop) with instant preview.
 - Error messages for common actions (e.g., duplicate email on sign up).
 
