@@ -15,6 +15,7 @@ type Product = {
   makingCharges: number;
   taxPercentage: number;
   qrCodeUrl?: string;
+  barcodeUrl?: string;
   publicId?: string;
 };
 
@@ -121,7 +122,16 @@ export default function ProductsPage() {
             {products.map(p => (
               <div key={p._id} className="rounded-lg border border-black/10 bg-white p-4">
                 <div className="font-medium">{p.name}</div>
-                {p.qrCodeUrl && <img src={p.qrCodeUrl} alt="QR" className="w-24 h-24 mt-2" />}
+                <div className="flex items-center gap-4 mt-2">
+                  {p.qrCodeUrl && <img src={p.qrCodeUrl} alt="QR" className="w-24 h-24" />}
+                  {p.barcodeUrl && (
+                    <img
+                      src={p.barcodeUrl}
+                      alt="Barcode"
+                      className="h-20 max-w-[220px] w-auto object-contain"
+                    />
+                  )}
+                </div>
                 {p.publicId && (
                   <a className="underline text-sm" href={`/product/${p.publicId}`} target="_blank">Open public page</a>
                 )}

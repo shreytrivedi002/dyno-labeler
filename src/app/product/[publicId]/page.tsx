@@ -31,8 +31,13 @@ export default async function PublicProductPage({ params }: { params: Promise<{ 
         </div>
 
         {data.qrCodeUrl && (
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-3">
             <img src={data.qrCodeUrl} alt="QR" className="w-40 h-40" />
+          </div>
+        )}
+        {data.barcodeUrl && (
+          <div className="flex justify-center">
+            <img src={data.barcodeUrl} alt="Barcode" className="h-16 max-w-[240px] w-auto object-contain" />
           </div>
         )}
       </div>

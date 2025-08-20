@@ -14,6 +14,7 @@ export interface IProduct {
 	makingCharges: number;
 	taxPercentage: number;
 	qrCodeUrl?: string;
+	barcodeUrl?: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -32,6 +33,7 @@ const ProductSchema = new Schema<IProduct>(
 		makingCharges: { type: Number, required: true, min: 0 },
 		taxPercentage: { type: Number, required: true, min: 0 },
 		qrCodeUrl: { type: String },
+		barcodeUrl: { type: String },
 	},
 	{ timestamps: true }
 );

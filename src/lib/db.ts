@@ -12,6 +12,7 @@ export async function connectToDatabase(): Promise<typeof mongoose> {
 		throw new Error("MONGODB_URI is not defined in environment variables");
 	}
 
-	cachedPromise = mongoose.connect(uri, { bufferCommands: false }) as unknown as Promise<typeof mongoose>;
+	const dbName = process.env.MONGODB_DB || "priceLabelApp";
+	cachedPromise = mongoose.connect(uri, { bufferCommands: false, dbName }) as unknown as Promise<typeof mongoose>;
 	return cachedPromise;
 }

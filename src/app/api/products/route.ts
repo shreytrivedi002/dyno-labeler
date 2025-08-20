@@ -8,6 +8,7 @@ import { z } from "zod";
 import { nanoid } from "nanoid";
 import QRCode from "qrcode";
 import { calculateFinalPrice, calculateMaterialCost } from "@/lib/pricing";
+import bwipjs from "bwip-js";
 
 const ProductItemSchema = z.object({ materialId: z.string(), quantity: z.number().nonnegative() });
 const ProductSchema = z.object({
@@ -59,6 +60,16 @@ export async function POST(req: Request) {
   const publicUrl = `${baseUrl}/product/${publicId}`;
   const qrCodeUrl = await QRCode.toDataURL(publicUrl);
 
+  const png = await bwipjs.toBuffer({
+    bcid: 'code128',
+    text: publicId,
+    scale: 3,
+    height: 10,
+    includetext: false,
+    textxalign: 'center',
+  });
+  const barcodeUrl = `data:image/png;base64,${Buffer.from(png).toString('base64')}`;
+
   const created = await Product.create({
     userId,
     publicId,
@@ -67,6 +78,7 @@ export async function POST(req: Request) {
     makingCharges: parsed.data.makingCharges,
     taxPercentage: parsed.data.taxPercentage,
     qrCodeUrl,
+    barcodeUrl,
   });
 
   return NextResponse.json(
