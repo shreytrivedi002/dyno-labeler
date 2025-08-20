@@ -16,24 +16,26 @@ export default async function PublicProductPage({ params }: { params: Promise<{ 
   if (!data) return <div className="p-6">Not found</div>;
 
   return (
-    <div className={`max-w-md mx-auto p-6 bg-white rounded-xl border border-black/10 theme-${data.theme}`}>
-      <h1 className="text-2xl font-semibold mb-1">{data.name}</h1>
-      {data.shopName && <div className="text-sm text-black/60 mb-1">{data.shopName}</div>}
-      <div className="text-sm text-black/50 mb-4">ID: {data.publicId}</div>
+    <div className={`min-h-screen theme-${data.theme} flex items-start justify-center`} style={{ background: "#fafafa" }}>
+      <div className="w-full max-w-md p-6 mt-8 bg-white rounded-xl border border-black/10">
+        <h1 className="text-2xl font-semibold mb-1">{data.name}</h1>
+        {data.shopName && <div className="text-sm text-black/60 mb-1">{data.shopName}</div>}
+        <div className="text-sm text-black/50 mb-4">ID: {data.publicId}</div>
 
-      <div className="space-y-1 mb-4 text-sm">
-        <div>Making charges: <span className="font-medium">{data.makingCharges}</span></div>
-        <div>Tax: <span className="font-medium">{data.taxPercentage}%</span></div>
-        <div className="font-medium">Subtotal: {data.totals.subtotal.toFixed(2)}</div>
-        <div>Tax amount: {data.totals.taxAmount.toFixed(2)}</div>
-        <div className="text-lg font-semibold">Final: {data.totals.finalPrice.toFixed(2)}</div>
-      </div>
-
-      {data.qrCodeUrl && (
-        <div className="flex justify-center">
-          <img src={data.qrCodeUrl} alt="QR" className="w-40 h-40" />
+        <div className="space-y-1 mb-4 text-sm">
+          <div>Making charges: <span className="font-medium">{data.makingCharges}</span></div>
+          <div>Tax: <span className="font-medium">{data.taxPercentage}%</span></div>
+          <div className="font-medium">Subtotal: {data.totals.subtotal.toFixed(2)}</div>
+          <div>Tax amount: {data.totals.taxAmount.toFixed(2)}</div>
+          <div className="text-lg font-semibold text-[var(--primary)]">Final: {data.totals.finalPrice.toFixed(2)}</div>
         </div>
-      )}
+
+        {data.qrCodeUrl && (
+          <div className="flex justify-center">
+            <img src={data.qrCodeUrl} alt="QR" className="w-40 h-40" />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
