@@ -30,6 +30,11 @@ export default function ProductsPage() {
     taxPercentage: 3,
   });
 
+  async function refreshProducts() {
+    const list = await fetch("/api/products");
+    if (list.ok) setProducts(await list.json());
+  }
+
   useEffect(() => {
     (async () => {
       const [mRes, pRes] = await Promise.all([fetch("/api/materials"), fetch("/api/products")]);
@@ -69,8 +74,16 @@ export default function ProductsPage() {
     });
     if (res.ok) {
       setForm({ _id: "", name: "", materials: [], makingCharges: 0, taxPercentage: 3 });
-      const list = await fetch("/api/products");
-      if (list.ok) setProducts(await list.json());
+      await refreshProducts();
+    }
+  }
+
+  async function deleteProduct(id: string) {
+    const ok = confirm("Delete this product? This action cannot be undone.");
+    if (!ok) return;
+    const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+    if (res.ok) {
+      await refreshProducts();
     }
   }
 
@@ -118,10 +131,16 @@ export default function ProductsPage() {
       <Card>
         <CardHeader>Products</CardHeader>
         <CardContent>
+          <div className="flex justify-end mb-3">
+            <a className="ui-link text-sm" href="/dashboard/labels">Print labels →</a>
+          </div>
           <div className="grid sm:grid-cols-2 gap-4">
             {products.map(p => (
               <div key={p._id} className="rounded-lg border border-black/10 bg-white p-4">
-                <div className="font-medium">{p.name}</div>
+                <div className="flex items-center justify-between">
+                  <div className="font-medium">{p.name}</div>
+                  <button onClick={() => deleteProduct(p._id)} className="text-red-600 text-sm">Delete</button>
+                </div>
                 <div className="flex items-center gap-4 mt-2">
                   {p.qrCodeUrl && <img src={p.qrCodeUrl} alt="QR" className="w-24 h-24" />}
                   {p.barcodeUrl && (
