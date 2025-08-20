@@ -1,0 +1,59 @@
+Product Requirement Document (PRD)
+This document describes the requirements for a Jewellery Price Label System, a production-ready
+web application for jewellery shops to maintain real-time product pricing, calculate costs based on
+materials, and generate QR codes for customers to view live prices. The system will be built using
+Next.js and MongoDB, optimized for mobile-first usage.
+Core Requirements
+- Shop owners create a profile with shop details.
+- Manage a materials price chart (e.g., Gold 22K, Diamond Type 1).
+- Create products with materials, quantities, making charges, and tax.
+- Auto-calculated final price with breakdown.
+- Generate QR codes for each product linking to a public branded page.
+- Public page shows shop branding, product name, ID, and price breakdown.
+Tech Stack
+- Framework: Next.js (Frontend + Backend with API routes) - Database: MongoDB Atlas -
+Authentication: NextAuth.js - Styling: TailwindCSS (Mobile-first) - QR Code: qrcode npm package -
+Deployment: Vercel
+Database Schema
+User (Shop Owner)
+{ _id: ObjectId, name: String, contact: String, email: String, password: String, //
+hashed subdomain: String }
+Material (Price Chart)
+}
+{ _id: ObjectId, userId: ObjectId, name: String, unit: String, pricePerUnit: Number
+Product
+{ _id: ObjectId, userId: ObjectId, publicId: String, name: String, materials: [ {
+materialId: ObjectId, quantity: Number } ], makingCharges: Number, taxPercentage:
+Number, qrCodeUrl: String }
+Price Calculation Formula
+Material Cost = Σ(Quantity × PricePerUnit) Subtotal = Material Cost + Making Charges Final Price =
+Subtotal + (Subtotal × TaxPercentage/100)
+API Endpoints
+- POST /api/auth/register → Register shop owner
+- POST /api/auth/login → Login
+- GET /api/materials → List materials
+- POST /api/materials → Add material
+- PUT /api/materials/:id → Update material
+- DELETE /api/materials/:id → Delete material
+- GET /api/products → List products
+- POST /api/products → Add product
+- PUT /api/products/:id → Update product
+- DELETE /api/products/:id → Delete product
+- GET /api/products/:publicId → Public product page (QR scan)
+UI Pages
+- /register → Shop signup
+- /login → Shop login
+- /dashboard → Overview (materials + products + QR codes)
+- /dashboard/materials → Manage materials
+- /dashboard/products → Manage products
+- /product/[publicId] → Public product page
+MVP Scope
+■ Shop owner login/profile
+■ CRUD for materials
+■ CRUD for products with live price calculation
+■ QR code generation per product
+■ Public product page with branding & breakdown
+Success Criteria
+- Updating the price chart automatically updates all product prices. - QR scan always shows the
+latest branded price with breakdown. - Mobile UI is simple enough for shop owners to use daily
+instead of Excel sheets.
