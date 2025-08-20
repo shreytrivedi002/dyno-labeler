@@ -1,26 +1,41 @@
 @import "tailwindcss";
 
+/* Base color tokens */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f7f8;
+  --fg: #0f172a;
+  --card: #ffffff;
+  --muted: #475569;
+  --border: #e5e7eb;
+  --primary: #10b981; /* default emerald */
+  --primary-contrast: #ffffff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Themes on root or any container */
+:root.theme-emerald, .theme-emerald { --primary: #059669; }
+:root.theme-royal, .theme-royal { --primary: #2563eb; }
+:root.theme-amber, .theme-amber { --primary: #f59e0b; }
+:root.theme-rose, .theme-rose { --primary: #e11d48; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Reset/structure */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-geist-sans, Arial), system-ui, -apple-system;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Reusable primitives */
+.ui-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.ui-link { color: var(--primary); text-decoration: underline; }
+.ui-link:hover { opacity: .9; }
